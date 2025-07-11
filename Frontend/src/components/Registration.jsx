@@ -38,11 +38,11 @@ function Registration() {
       })
     }
 
-     console.log(e.target.value, 'valueeee');
+    
   }
 
   // function to handle the form submission
-  const handleSubmit = (e) =>{
+  const handleSubmit = async (e) =>{
     e.preventDefault();
     
     // validate all fields before submission
@@ -64,6 +64,22 @@ function Registration() {
       // no errors, proceed with form submission
       setIsSubmit(true);
       console.log('Form submitted', formData);
+
+
+
+      // send data to backend
+      const response = await fetch('http://localhost:5000/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+
+      const data = await response.json();
+      console.log('Response from backend:', data);
+
+
       setFormData({
         firstName: '',
         lastName: '',
