@@ -44,15 +44,37 @@ function Registration() {
   // function to handle the form submission
   const handleSubmit = (e) =>{
     e.preventDefault();
-    setIsSubmit(true);
-    console.log('Form submitted', formData);
-    setFormData({
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      phone: ''
-    })
+    
+    // validate all fields before submission
+    // approach to do this
+    // 1. Validate each field using the validators
+    // 2. If any field has an error, set the error state
+    // 3. If no errors, proceed with form submission
+
+    const newErr = {};
+    Object.keys(formData).forEach((field)=>{
+      const err = validateField(field, formData[field]);
+      newErr[field] = err; // store the error for each field
+    });
+    setErrors(newErr); // update the errors state
+
+    // check if there are any errors
+    const hasErrors = Object.values(newErr).some((error) => error);
+    if (!hasErrors) {
+      // no errors, proceed with form submission
+      setIsSubmit(true);
+      console.log('Form submitted', formData);
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        phone: ''
+      });
+    }else{
+      setIsSubmit(false);
+      console.log('Form has errors', newErr);
+    }
   }
  
   // now write validation function for all the fields
