@@ -2,7 +2,7 @@ import cors from 'cors';
 import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './src/db/index.js';
-import User from './src/models/user.model.js';
+import userRouter from './src/routes/user.route.js';
 
 dotenv.config();
 
@@ -23,30 +23,9 @@ connectDB()
  })
 
 // API endpoint to handle user registration
-app.post('/api/register', async (req, res) => {
-  console.log('Registration data received:', req.body);
+//app.post('/api/register', registerUser);
 
-  // extract user data from request body 
-  const { firstName, lastName, email, password, phone } = req.body;
-
-  if(!firstName || !lastName || !email || !password || !phone) {
-    return res.status(400).json({ error: 'All fields are required' });
-  }
-
-  // create user 
-  const user =  await User.create({
-    firstName,lastName, email, password, phone
-  })
-  
-
-  
-  // For now, just send back a simple response
-  res.json({
-    success: true,
-    message: 'user created successfully!',
-    user
-  });
-});
+app.use("/user", userRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

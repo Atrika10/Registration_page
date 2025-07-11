@@ -68,7 +68,7 @@ function Registration() {
 
 
       // send data to backend
-      const response = await fetch('http://localhost:5000/api/register', {
+      const response = await fetch('http://localhost:5000/user/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
