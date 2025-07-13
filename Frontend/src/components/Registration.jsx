@@ -263,7 +263,7 @@ function Registration() {
 
           <div className="text-center mt-6 text-sm text-gray-600">
             Already have an account?
-            <a href="#" className="font-medium text-blue-600 hover:text-blue-500 hover:underline">
+            <a href="/login" className="font-medium text-blue-600 hover:text-blue-500 hover:underline">
               Sign in
             </a>
           </div>
