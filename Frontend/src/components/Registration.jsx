@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
+import {useNavigate} from 'react-router-dom'
 
 function Registration() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState(
     {
       firstName: '',
@@ -65,8 +68,6 @@ function Registration() {
       setIsSubmit(true);
       console.log('Form submitted', formData);
 
-
-
       // send data to backend
       const response = await fetch('http://localhost:5000/user/register', {
         method: 'POST',
@@ -79,7 +80,6 @@ function Registration() {
       const data = await response.json();
       console.log('Response from backend:', data);
 
-
       setFormData({
         firstName: '',
         lastName: '',
@@ -87,6 +87,10 @@ function Registration() {
         password: '',
         phone: ''
       });
+
+      // if user successfully created, send user to dashboard
+      navigate('/dashboard');
+      
     }else{
       setIsSubmit(false);
       console.log('Form has errors', newErr);
