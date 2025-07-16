@@ -49,3 +49,34 @@ export const loginUser = async (req, res)=>{
  
     });
  }
+
+ export const getUserDetailsByTime = async (req, res)=>{
+   const { startDate, endDate } = req.body;
+   console.log("data is coming from frontend", { startDate, endDate });
+
+   // Find all users created between startDate and endDate
+   try {
+
+      const users = await User.find({
+         createdAt : {
+            $gte : new Date(startDate),
+            $lte : new Date(endDate)
+         }
+      });
+
+      console.log(users);
+      res.status(200).json({
+         success : true,
+         message: "Details received successfully",
+         data: users
+      })
+      
+   } catch (err) {
+      console.log("Error fetching user details:", err);
+      res.status(500).json({
+         success: false,
+         message: "Error fetching user details",
+         error: err.message
+      })
+   }
+}
